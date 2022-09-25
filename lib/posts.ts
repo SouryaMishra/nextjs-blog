@@ -21,7 +21,7 @@ export const getSortedPostsData = () => {
 
     return {
       id,
-      ...matterResult.data,
+      ...(matterResult.data as { date: string; title: string }),
     };
   });
 
@@ -46,7 +46,7 @@ export const getAllPostIds = () => {
   }));
 };
 
-export const getPostDataByid = async (id) => {
+export const getPostDataByid = async (id: string) => {
   const fileContents = fs.readFileSync(path.join(postsDir, `${id}.md`));
   const matterResult = matter(fileContents);
 
@@ -58,6 +58,6 @@ export const getPostDataByid = async (id) => {
   return {
     id,
     contentHTML,
-    ...matterResult.data,
+    ...(matterResult.data as { date: string; title: string }),
   };
 };
